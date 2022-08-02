@@ -12,7 +12,7 @@ export default class Commit extends Command {
       {
         type: 'select',
         name: 'type',
-        message: 'Pick a color',
+        message: 'Pick a type of commit',
         choices: [
           { title: 'feat', description: 'A new feature', value: 'feat' },
           { title: 'fix', description: 'A bug fix', value: 'fix' },
@@ -26,9 +26,9 @@ export default class Commit extends Command {
         initial: 0
       },
       {
-        type: (prev: any) => ['feat', 'refactor'].includes(prev) ? 'toggle' : null,
+        type: (prev: any) => ['feat'].includes(prev) ? 'toggle' : null,
         name: 'breaking',
-        message: 'Is it a breaking chamge?',
+        message: 'Does it contain breaking chamges?',
         initial: false,
         active: 'yes',
         inactive: 'no'
@@ -36,7 +36,7 @@ export default class Commit extends Command {
       {
         type: 'text',
         name: 'message',
-        message: `What's the commit message?`
+        message: `Commit message`
       }
     ];
     const response = await prompts(questions);
