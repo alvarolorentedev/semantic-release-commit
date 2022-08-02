@@ -1,21 +1,13 @@
 import {Command, Flags} from '@oclif/core'
 import prompts from "prompts";
+import { simpleGit, SimpleGit, CleanOptions } from 'simple-git';
 
-export default class Hello extends Command {
-  static description = 'Say hello'
+//const git: SimpleGit = simpleGit().clean(CleanOptions.FORCE);
 
-  static examples = [
-    `$ oex hello friend --from oclif
-hello friend from oclif! (./src/commands/hello/index.ts)
-`,
-  ]
+export default class Commit extends Command {
+  static description = 'Commits added files using semantic release message'
 
   async run(): Promise<void> {
-// : 
-// : 
-// : 
-// : 
-// : 
     const questions: any = [
       {
         type: 'select',
@@ -48,6 +40,11 @@ hello friend from oclif! (./src/commands/hello/index.ts)
       }
     ];
     const response = await prompts(questions);
-    console.log(response)
+    console.log()
+    simpleGit()
+     .commit(
+      `${response.type}: ${response.message}${response.breaking? " (BREAKING CHANGE)" : ""}`, 
+      () => console.log(`commited: "${response.type}: ${response.message}${response.breaking? " (BREAKING CHANGE)" : ""}"`)
+      )
   }
 }
